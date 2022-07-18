@@ -2,6 +2,7 @@ import { LocalStorage } from "@raycast/api";
 import QueryString from "qs";
 import axiosInstance from "./fetcher";
 import { Error, Storage } from ".";
+import { ERROR_CODE } from "./errorCode";
 
 const LANGUAGE_DETECT_ENDPOINT = "/detectLangs";
 const TRANSLATE_ENDPOINT = "/n2mt";
@@ -28,7 +29,13 @@ export const detectLangs = async ({ query, setLanguageCode, setIsLoading, setErr
       if (response.data.langCode) setLanguageCode(response.data.langCode);
       setIsLoading(false);
     })
-    .catch((errors) => setError({ ...errors, title: "지원하지 않는 언어입니다" }));
+    .catch((errors) => {
+      setError({
+        ...errors,
+        title: ERROR_CODE[errors.response.status as keyof typeof ERROR_CODE] || "지원하지 않는 언어입니다",
+      });
+      setIsLoading(false);
+    });
 };
 
 export const translateTerm = async ({ query, languageCode, setStorage, setIsLoading, setError }: TranslateTerm) => {
@@ -46,10 +53,11 @@ export const translateTerm = async ({ query, languageCode, setStorage, setIsLoad
       setStorage((prevState) => ({ [query]: response.data.message.result.translatedText, ...prevState }));
       setIsLoading(false);
     })
-    .catch((errors) =>
+    .catch((errors) => {
       setError({
         ...errors,
-        title: "번역하는 중에 문제가 발생했습니다",
-      })
-    );
+        title: ERROR_CODE[errors.response.status as keyof typeof ERROR_CODE] || "번역하는 중에 문제가 발생했습니다",
+      });
+      setIsLoading(false);
+    });
 };
