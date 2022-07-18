@@ -1,0 +1,57 @@
+{
+  "$schema": "https://www.raycast.com/schemas/extension.json",
+  "name": "papago-translator",
+  "title": "Papago Translator",
+  "description": "Translate with Naver Papago API",
+  "icon": "papago-icon.png",
+  "author": "seongjin",
+  "categories": [
+    "Applications"
+  ],
+  "license": "MIT",
+  "commands": [
+    {
+      "name": "index",
+      "title": "Translate Language",
+      "subtitle": "Papago",
+      "description": "Translate with Naver Papago NMT API",
+      "mode": "view"
+    }
+  ],
+  "preferences": [
+    {
+      "name": "clientId",
+      "type": "textfield",
+      "required": true,
+      "title": "Papago Client ID",
+      "description": "Papago Client ID"
+    },
+    {
+      "name": "clientSecret",
+      "type": "textfield",
+      "required": true,
+      "title": "Papago Client Secret",
+      "description": "Papago Client Secret"
+    }
+  ],
+  "dependencies": {
+    "@raycast/api": "^1.37.1",
+    "axios": "^0.27.2",
+    "qs": "^6.11.0"
+  },
+  "devDependencies": {
+    "@types/qs": "^6.9.7",
+    "@typescript-eslint/eslint-plugin": "^5.0.0",
+    "@typescript-eslint/parser": "^5.0.0",
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.3.0",
+    "prettier": "^2.5.1",
+    "typescript": "^4.4.3"
+  },
+  "scripts": {
+    "build": "ray build -e dist",
+    "dev": "ray develop",
+    "fix-lint": "ray lint --fix",
+    "lint": "ray lint"
+  }
+}
